@@ -21,10 +21,10 @@ $(document).ready(function () {
     document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === "visible") {
             document.title = "Portfolio | Devangshu Mazumder";
-            $("#favicon").attr("href", "/assets/images/profile6.png");
+            $("#favicon").attr("href", "/assets/images/logo.gif");
         } else {
             document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", "/assets/images/profile6.png");
+            $("#favicon").attr("href", "/assets/images/logo.gif");
         }
     });
 
