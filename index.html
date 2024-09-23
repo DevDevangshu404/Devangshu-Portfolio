@@ -88,7 +88,7 @@
     </header>
 
     <!-- Hero Section Starts -->
-    <section class="home" id="welcome">
+    <section class="home" id="home">
         <canvas id="matrixCanvas"></canvas>
         <div class="content">
             <h2>Hi There,<br> I'm <span>Devangshu Mazumder</span></h2>
@@ -157,7 +157,7 @@
                 <img draggable="false" class="tilt" src="./assets/images/profile5.jpg" alt="">
             </div>
             <div class="content">
-                <h3>I'm Devangshu Mazumder</h3>
+                <h3><span class="typing-texto"></span></h3>    
                 <p>
                     I’m currently pursuing an MSc in Cyber Security at the University of Birmingham. I have a BTech in Computer Science from VIT University, and I've worked at Oracle and General Electric. My expertise includes full-stack development, software engineering, and cybersecurity, with a passion for building secure systems.
                 </p>
@@ -177,6 +177,16 @@
             </div>
         </div>
     </section>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"></script>
+    <script>
+        var typed = new Typed(".typing-texto", {
+            strings: ["Hello World;"],
+            typeSpeed: 50,
+            backSpeed: 25,
+            loop: true
+        });
+    </script>
     <!-- About Section Ends -->
 
 <!-- Skills Section Starts -->
