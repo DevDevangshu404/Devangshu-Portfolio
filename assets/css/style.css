@@ -609,13 +609,19 @@ header .navbar ul li a:hover {
     margin-top: 2rem;
   }
   .skills .container .row {
-      grid-template-columns: repeat(auto-fill, 1fr); /* 2 columns on smaller screens */
+    grid-template-columns: repeat(4,minmax(100px,1fr)); /* 2 columns on smaller screens */
   }
 }
 
 @media screen and (max-width: 480px) {
   .skills .container .row {
-      grid-template-columns: repeat(auto-fill, 1fr); /* 1 column on mobile */
+    grid-template-columns: repeat(3,minmax(100px,1fr)); /* 1 column on mobile */
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .skills .container .row {
+    grid-template-columns: repeat(2,minmax(100px,1fr)); /* 1 column on mobile */
   }
 }
 
