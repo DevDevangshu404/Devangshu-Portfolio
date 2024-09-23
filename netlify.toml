@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/rehostpi"
+  to = "/projects/content/rehost/rehostpi.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/motion-detected-fuzzing"
+  to = "/projects/content/VideoFuzz/fuzzing.html"
+  status = 200
+  force = true
