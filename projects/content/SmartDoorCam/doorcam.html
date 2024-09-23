@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DoorCam Pentesting| Devangshu Mazumder</title>
+    
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/projects/content/VideoFuzz/style.css">
+
+    <!-- Favicon -->
+    <link id="favicon" rel="shortcut icon" href="/assets/images/profile6.png" type="image/x-png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar Section -->
+    <header>
+        <a href="/" class="logo"><i class="fas fa-shield-alt"></i> Devangshu</a>
+        <div id="menu" class="fas fa-bars"></div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!-- Project Section: Penetration Testing of the XTU J9 Smart Door Camera -->
+<section class="project-description">
+    <canvas id="matrixCanvas"></canvas>
+    <h1 class="animate-title">Penetration Testing of the XTU J9 Smart Door Camera</h1>
+    
+    <!-- Device Overview -->
+    <div class="project-details">
+        <h2 class="animate-title">Device Overview</h2>
+        <p class="animate-desc">At the start of this project, I worked with the XTU J9 Smart Door Camera, a robust IoT device with advanced security and monitoring features. This camera offers 1080p HD video streaming, motion detection, night vision up to 10 meters, and two-way audio communication. It is powered by a 4800mAH battery and supports local and cloud storage, including local SD card storage up to 128 GB. For connectivity, it uses Wi-Fi and allows real-time alerts to be sent directly to the user's smartphone.</p>
+    
+        <div class="media animate-media">
+            <img src="/assets/images/projects/XTUJ9.png" alt="XTU J9 Smart Door Camera" class="project-image">
+            <p2 class="animate-desc">Figure 1: XTU J9 Smart Door Camera</p2>
+        </div>
+
+        <p class="animate-desc">The functionality of the device revolves around monitoring the live feed, communicating via two-way audio, and receiving real-time notifications about visitors or suspicious activities. The device communicates with the Cloudedge app for real-time interaction and allows seamless remote access.</p>
+
+        <!-- Investigation Process and Device Setup -->
+        <h2 class="animate-title">Investigation Process and Device Setup</h2>
+        <p class="animate-desc">I began by setting up the XTU J9 camera using the Cloudedge app. The device setup process was quite straightforward, involving scanning a QR code generated from the app to establish a Wi-Fi connection. During the initial setup, I proxied the connection through my machine to capture network traffic using Wireshark and Burp Suite. My goal was to intercept packets during the interaction between the camera and the app.</p>
+
+        <h3 class="animate-title">1. Intercepting Packets</h3>
+        <p class="animate-desc">Once I started the device and clicked "Add Device" on the app, I noticed that the app sent a request to the cloud server (apis-us-west.cloudedge360.com) with query parameters that returned the setup video URL.</p>
+
+        <div class="media animate-media">
+            <img src="/assets/images/projects/packet-interception.png" alt="Packet Interception" class="project-image">
+            <p2 class="animate-desc">Figure 2: Intercepting Packet from App to Cloud Server</p2>
+        </div>
+
+        <p class="animate-desc">When I entered the Wi-Fi credentials, the app generated a QR code based on the provided network details. This QR code was meant to be scanned by the camera, and it was generated using a cloud-based API. Although I didn’t have time to explore further, it was evident that forging this QR code would be relatively easy using tools like CodeUtils.</p>
+
+        <h3 class="animate-title">2. Wi-Fi and Device Communication</h3>
+        <p class="animate-desc">Following the Wi-Fi setup, I found that the device was receiving an IP address via DHCP as expected. However, during an Nmap scan, I discovered that all the ports on the device were closed, which raised some curiosity about the device's architecture.</p>
+
+        <div class="media animate-media">
+            <img src="/assets/images/projects/arp-scan.png" alt="ARP Scan" class="project-image">
+            <p2 class="animate-desc">Figure 3: ARP Scan Revealing Device's IP and MAC Address</p2>
+        </div>
+
+        <!-- Device in Use: Network Traffic and Security Analysis -->
+        <h2 class="animate-title">Device in Use: Network Traffic and Security Analysis</h2>
+        <p class="animate-desc">Once the setup was complete, I started testing the camera's functionality. Pressing the alarm button on the device triggers the two-way audio feature, allowing communication between the camera and the app. During this interaction, I observed several unencrypted HTTP POST requests being sent to the cloud.</p>
+
+        <div class="media animate-media">
+            <img src="/assets/images/projects/audio-data.png" alt="Audio Data in Network Traffic" class="project-image">
+            <p2 class="animate-desc">Figure 4: Unencrypted Audio Data in Network Traffic</p2>
+        </div>
+
+        <p class="animate-desc">The POST request sent visitor event data (like the timestamp and device ID) to the cloud server, while subsequent traffic transmitted encrypted video data to the cloud storage server. Although the video data was encrypted, the lack of encryption in some of the HTTP requests presented a potential vulnerability.</p>
+
+        <!-- Reverse Engineering: APK Analysis -->
+        <h2 class="animate-title">Detailed Reverse Engineering: APK Analysis</h2>
+        <p class="animate-desc">To analyze the device further, I decompiled the Cloudedge app used to control the camera. Using MBSF Framework for static analysis, I uncovered several critical vulnerabilities:</p>
+
+        <h3 class="animate-title">1. World-readable Sensitive Data</h3>
+        <p class="animate-desc">Sensitive information, including Wi-Fi credentials and cloud login details, was stored insecurely in SharedPreference files within the app. I retrieved files like WIFI_INFO.xml and MEARI_USER.xml that contained unencrypted sensitive data, exposing the device to attackers who could potentially access these files.</p>
+
+        <h3 class="animate-title">2. Weak Encryption</h3>
+        <p class="animate-desc">The app used vulnerable encryption methods, particularly DESede with weak initialization vectors (IVs) and hardcoded secrets. This could potentially allow attackers to brute force the encrypted data.</p>
+
+        <h3 class="animate-title">3. SQL Injection</h3>
+        <p class="animate-desc">During my analysis, I found that the app’s internal database was vulnerable to SQL injection attacks. Raw SQL queries without proper input sanitization were used for operations like deleting account passwords.</p>
+
+        <div class="media animate-media">
+            <img src="/assets/images/projects/sql-injection.png" alt="SQL Injection Vulnerability" class="project-image">
+            <p2 class="animate-desc">Figure 5: SQL Injection Vulnerability in the App's Database</p2>
+        </div>
+
+        <!-- Possible Attack Vectors -->
+        <h2 class="animate-title">Possible Attack Vectors</h2>
+
+        <ul class="animate-desc">
+            <li>Replay Attacks</li>
+            <li>Unencrypted Traffic</li>
+            <li>Cloud Interaction Vulnerabilities</li>
+            <li>De-authentication and Wi-Fi Brute Force Attack</li>
+            <p class="animate-desc">Since the device uses Wi-Fi for connectivity, it is vulnerable to de-authentication attacks using tools like Aircrack-ng. By sending continuous de-authentication frames, I was able to prevent the doorbell from reconnecting to the router, resulting in a denial of service. A brute-force attack could then be performed using a captured WPA handshake.</p>
+            <p class="animate-desc">The de-authentication attack works well with the smart video doorbell. If continuously sending the de-authentication frames, the smart doorbell will not be able to connect to the router and be used normally.</p>
+            <p class="animate-desc">This is a kind of DoS attack. IEEE 802.11w protocol provides a solution against the de-authentication attack. However, the 802.11w protocol is only effective for resolving the de- authentication attacks with low flooding rates and not effective under high flooding rates. </p>
+            <div class="media animate-media">
+                <img src="/assets/images/projects/deauthattack.png" alt="Deauth Attack" class="project-image">
+                <p2 class="animate-desc">Figure 6: De-auth Attack</p2>
+            </div>
+            <p class="animate-desc">After We have got the handshake, we can brute force it with a password dictionary using Aircrack-ng tool. </p>
+            <div class="media animate-media"></div>
+                <img src="/assets/images/projects/Bruteforce.png" alt="Deauth Attack" class="project-image">
+            </div>
+        </ul>
+
+        <!-- Mitigations and Recommendations -->
+        <h4 class="animate-title">Mitigations and Recommendations</h4>
+        <ul class="animate-desc">
+    <li><strong>Secure Sensitive Data:</strong> Use proper encryption mechanisms for sensitive data storage, both in transit and at rest. SharedPreference files should be encrypted, and hardcoded secrets should be avoided.</li>
+    <li><strong>Stronger Encryption:</strong> Implement secure encryption protocols like AES with strong, unique IVs and secret keys for all sensitive data.</li>
+    <li><strong>Secure SQL Queries:</strong> Avoid using raw SQL queries and instead, use parameterized queries with proper input validation to prevent SQL injection attacks.</li>
+    <li><strong>Enhance Network Security:</strong> Implement WPA3 or 802.11w protocols to secure Wi-Fi connections against de-authentication and brute-force attacks.</li>
+    <li><strong>Improve Registration Validation:</strong> Validate all user inputs during registration and login to prevent the creation of fake accounts and prevent potential DoS attacks.</li>
+        </ul>
+
+<!-- Conclusion -->
+        <h4 class="animate-title">Conclusion</h4>
+        <p class="animate-desc">This project provided valuable insights into the security weaknesses of IoT devices like the XTU J9 Door Camera. By analyzing network traffic, app functionality, and device communication, I uncovered several vulnerabilities that could be exploited by attackers. Strengthening encryption, securing sensitive data, and improving Wi-Fi security are critical steps toward mitigating these risks.</p>
+
+
+<!-- Tools & Technologies Used -->
+<h3 class="animate-title">Tools & Technologies</h3>
+<ul class="animate-desc">
+    <li>Wireshark</li>
+    <li>Burp Suite</li>
+    <li>Nmap</li>
+    <li>Aircrack-ng</li>
+    <li>MBSF Framework</li>
+</ul>
+
+   <!-- GitHub Button Section -->
+   <div class="cta animate-cta">
+    <a href="https://github.com/DevDevangshu404/XTU-J9-pentesting" target="_blank" class="btn github-btn">View on GitHub</a>
+   <br>
+    <!-- Call to Action (e.g., View More Projects or Go Back to Projects Page) -->
+    <div class="cta animate-cta">
+        <a href="/projects" class="btn">Back to Projects</a>
+    </div>
+</section>
+
+<!-- Matrix Effect Script (same as earlier) -->
+<script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    let matrixChars = '01'; 
+    const fontSize = 18;
+    let columns;
+    let drops;
+
+    function adjustCanvasSize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(0);
+    }
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#7e3079'; 
+        ctx.font = `${fontSize}px monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 33);
+
+    window.addEventListener('resize', adjustCanvasSize);
+    adjustCanvasSize();
+</script>
+
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <h3>Devangshu Mazumder</h3>
+            <p>Thank you for visiting my portfolio. Let's connect on social media or via email to collaborate on interesting projects.</p>
+            <div class="socials">
+                <a href="https://linkedin.com/in/devangshumazumder" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/DevDevangshu404" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:devangshuwork@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+<!-- scroll top btn -->
+<a href="#work" class="fas fa-angle-up" id="scroll-top"></a>
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS STARTS ==== -->
+<!-- jquery cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- vanilla tilt.js links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+<!-- scroll reveal anim -->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!-- isotope filter plugin cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
+
+<!-- Custom JS -->
+<script src="./script.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+
+</body>
+</html>
