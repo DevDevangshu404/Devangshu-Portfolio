@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Devangshu Mazumder, cyber security, full stack developer, personal portfolio, MSc Cyber Security" />
+    <meta name="description" content="Welcome to Devangshu Mazumder's Portfolio. MSc Cyber Security Student and Full-Stack Developer." />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link id='favicon' rel="shortcut icon" href="./assets/images/profile6.png" type="image/x-png">
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title>Portfolio | Devangshu Mazumder</title>
+
+    <style>
+        /* Animations for skills icons */
+        @keyframes floating {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes randomMovement {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Icon styling and animations */
+        .skills .bar img {
+            animation: floating 4s ease-in-out infinite, randomMovement 6s ease-in-out infinite;
+        }
+
+        /* About section adjustments */
+        .about .content {
+            margin-top: 20px; /* Adjust margin to move the text down */
+        }
+
+        .about .content p {
+            margin-top: 30px; /* Align text more centrally with image */
+        }
+
+        /* Skills grid alignment */
+        .skills .container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* Create even columns for icons */
+            gap: 20px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        /* Hover effect for skill icons */
+        .skills .bar:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s;
+        }
+
+    </style>
+</head>
+
+<body oncontextmenu="return false">
+
+    <!-- Navbar Section -->
+    <header>
+        <a href="/" class="logo"><i class="fas fa-shield-alt"></i> Devangshu</a>
+        <div id="menu" class="fas fa-bars"></div>
+        <nav class="navbar">
+            <ul>
+                <li><a class="active" href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#work">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section Starts -->
+    <section class="home" id="home">
+        <canvas id="matrixCanvas"></canvas>
+        <div class="content">
+            <h2>Hi There,<br> I'm <span>Devangshu Mazumder</span></h2>
+            <p>I'm into <span class="typing-text"></span></p>
+            <a href="#about" class="btn"><span>Learn More</span><i class="fas fa-arrow-circle-down"></i></a>
+            <div class="socials">
+                <ul class="social-icons">
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/devangshumazumder" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a class="github" href="https://github.com/DevDevangshu404" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li><a class="email" href="mailto:devangshuwork@gmail.com"><i class="fas fa-envelope"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="image">
+            <img src="./assets/images/loader4.gif" alt="Devangshu Mazumder">
+        </div>
+    </section>
+
+    <!-- Typed.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"></script>
+    <script>
+        var typed = new Typed(".typing-text", {
+            strings: ["Software Engineering", "Cyber Security", "Full-Stack Development", "Penetration Testing", "Secure Systems", "Reverse Engineering"],
+            typeSpeed: 50,
+            backSpeed: 25,
+            loop: true
+        });
+    </script>
+
+    <!-- Matrix Effect Script -->
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const matrixChars = '01';
+        const fontSize = 18;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(0);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00FF00';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+    </script>
+
+    <!-- About Section Starts -->
+    <section class="about" id="about">
+        <h2 class="heading"><i class="fas fa-user-alt"></i> About <span>Me</span></h2>
+        
+        <div class="row">
+            <div class="image">
+                <img draggable="false" class="tilt" src="./assets/images/profile5.jpg" alt="">
+            </div>
+            <div class="content">
+                <h3>I'm Devangshu Mazumder</h3>
+                <p>
+                    I’m currently pursuing an MSc in Cyber Security at the University of Birmingham. I have a BTech in Computer Science from VIT University, and I've worked at Oracle and General Electric. My expertise includes full-stack development, software engineering, and cybersecurity, with a passion for building secure systems.
+                </p>
+                <div class="box-container">
+                    <div class="box">
+                        <p><span>Email:</span> devangshuwork@gmail.com</p>
+                        <p><span>Location:</span> Birmingham, UK</p>
+                    </div>
+                </div>
+                <!-- Resume Button -->
+                <div class="resumebtn">
+                <a href="YOUR_RESUME_LINK_HERE" target="_blank" class="btn">
+                    <span>View CV</span>
+                    <i class="fas fa-file-download"></i>
+                </a>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section Ends -->
+
+<!-- Skills Section Starts -->
+<section class="skills" id="skills">
+    <h2 class="heading"><i class="fas fa-laptop-code"></i> Skills & <span>Abilities</span></h2>
+    
+    <div class="container">
+        <div class="row" id="skillsContainer">
+            <!-- Programming Languages -->
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/python--v1.png" alt="Python" />
+                    <span>Python</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo--v1.png" alt="Java" />
+                    <span>Java</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/c-plus-plus-logo.png" alt="C++" />
+                    <span>C++</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/javascript--v1.png" alt="JavaScript" />
+                    <span>JavaScript</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/kotlin.png" alt="Kotlin" />
+                    <span>Kotlin</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/offices/48/000000/php-logo.png" alt="PHP" />
+                    <span>PHP</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/Rprograming.jpeg" alt="R Programming" />
+                    <span>R Programming</span>
+                </div>
+            </div>
+  
+            <!-- Cyber Security Skills -->
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/Burp.png" alt="Burp Suite" />
+                    <span>Burp Suite</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/wireshark.jpeg" alt="Wireshark" />
+                    <span>Wireshark</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/metasploit.png" alt="Metasploit" />
+                    <span>Metasploit</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/ghidra.jpeg" alt="Ghidra" />
+                    <span>Ghidra</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/IDAPro.jpeg" alt="IDA Pro" />
+                    <span>IDA Pro</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/TCP:IP.png" alt="TCP/IP" />
+                    <span>TCP/IP</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/linux.png" alt="Linux" />
+                    <span>Linux</span>
+                </div>
+            </div>
+  
+            <!-- Software Engineering -->
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/000000/external-react-a-javascript-library-for-building-user-interfaces-logo-color-tal-revivo.png" alt="ReactJS" />
+                    <span>ReactJS</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/fluency/48/000000/node-js.png" alt="ExpressJS" />
+                    <span>ExpressJS</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/nodejs.png" alt="NodeJS" />
+                    <span>NodeJS</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/firebase.png" alt="Firebase" />
+                    <span>Firebase</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/mongodb.png" alt="MongoDB" />
+                    <span>MongoDB</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/mysql-logo.png" alt="MySQL" />
+                    <span>MySQL</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/opencv.png" alt="OpenCV" />
+                    <span>OpenCV</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="./assets/images/AWS.webp" alt="AWS" />
+                    <span>AWS</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/heroku.png" alt="Heroku" />
+                    <span>Heroku</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/ios-filled/48/0080FF/digitalocean.png" alt="DigitalOcean" />
+                    <span>DigitalOcean</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/ios-filled/48/1169ae/jquery.png" alt="jQuery" />
+                    <span>jQuery</span>
+                </div>
+            </div>
+  
+            <!-- Web Designing -->
+            <div class="bar">
+                <div class="info">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/48px-Tailwind_CSS_Logo.png" alt="TailwindCSS" />
+                    <span>TailwindCSS</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/bootstrap.png" alt="Bootstrap" />
+                    <span>Bootstrap</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/sass.png" alt="Sass" />
+                    <span>Sass</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/html-5--v1.png" alt="HTML5" />
+                    <span>HTML5</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/css3.png" alt="CSS3" />
+                    <span>CSS3</span>
+                </div>
+            </div>
+            <div class="bar">
+                <div class="info">
+                    <img src="https://img.icons8.com/color/48/000000/wordpress.png" alt="WordPress" />
+                    <span>WordPress</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  <!-- Skills Section Ends -->
+  
+  
+
+
+
+<!-- Education Section Starts -->
+<section class="education" id="education">
+    <h2 class="heading"><i class="fas fa-graduation-cap"></i> My <span>Education</span></h2>
+    
+    <div class="box-container">
+        <div class="box">
+            <div class="image">
+                <img src="./assets/images/educat/uob.png" alt="University of Birmingham">
+            </div>
+            <div class="content">
+                <h3>MSc Cyber Security</h3>
+                <p>University of Birmingham (2023 - 2024)</p>
+                <ul>
+                    <li>Key Modules: Secure Systems, Network Security, Cryptography</li>
+                    <li>Project: Automated Testing for Vehicular ECU using Computer Vision and CAN Bus</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="image">
+                <img src="./assets/images/educat/vit.png" alt="VIT University">
+            </div>
+            <div class="content">
+                <h3>Bachelor of Technology in Computer Science</h3>
+                <p>VIT University, India (2018 - 2022)</p>
+                <ul>
+                    <li>Key Modules: Software Engineering,Artificial Intelligence,Machine Learning, Network Security, Operating Systems</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Education Section Ends -->
+
+<!-- Projects Section Starts -->
+<!-- Projects Section Starts -->
+<section class="work" id="work">
+    <h2 class="heading"><i class="fas fa-laptop-code"></i> Projects <span>Made</span></h2>
+    <div class="box-container">
+        
+        <!-- Dynamic projects content loaded here -->
+    </div>
+    <div class="viewall">
+        <a href="/projects" class="btn"><span>View All Projects</span><i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<!-- Projects Section Ends -->
+<!-- experience section starts -->
+<section class="experience" id="experience">
+
+    <h2 class="heading"><i class="fas fa-briefcase"></i> Experience </h2>
+  
+    <div class="timeline">
+  
+      <!-- Oracle - Oracle Health (formerly Cerner) -->
+      <div class="container right" data-sr-id="1">
+        <div class="content">
+          <div class="tag">
+            <h2>Oracle </h2>
+          </div>
+          <div class="desc">
+              <h3>Production Software Engineer</h3>
+              <p>Sept 2022 - May 2023</p>
+              <ul>
+                <li>Streamlined communication and data exchange processes with the Foreign System Interface (FSI) team.</li>
+                <li>Improved code quality and reduced system errors through analysis of HL7 transactions.</li>
+                <li>Troubleshot technical issues, enhancing user experience and minimizing system downtime.</li>
+                <li>Implemented go-lives and code deployments, ensuring minimal disruptions and improved system stability.</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- General Electric (GE Steam Power) -->
+      <div class="container left" data-sr-id="2">
+        <div class="content">
+          <div class="tag">
+            <h2>General Electric </h2>
+          </div>
+          <div class="desc">
+              <h3>Software Intern</h3>
+              <p>Jan 2022 - Jul 2022</p>
+              <ul>
+                <li>Collaborated with the integrations department to develop interfaces and monitor communication channels.</li>
+                <li>Contributed to the CEGEDIM and JAGGAER1 projects, enhancing system interoperability.</li>
+                <li>Developed conversational AI bots using AWS features such as Lex, Lambda, and OpenSearch.</li>
+                <li>Supported DevOps teams through Lean IT practices, improving overall IT operations.</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- mDrift Technologies -->
+      <div class="container right" data-sr-id="3">
+        <div class="content">
+          <div class="tag">
+            <h2>mDrift Technologies</h2>
+          </div>
+          <div class="desc">
+              <h3>Full Stack Intern</h3>
+              <p>Jun 2021 - Jul 2021</p>
+              <ul>
+                <li>Executed website migrations and developed web applications using Flask and Wagtail.</li>
+                <li>Acquired skills in Web and Mobile Application Development, IoT, and Enterprise Software Development.</li>
+                <li>Served as a Front-End Developer Trainee, improving web design and development skills.</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+
+  
+    </div>
+  
+  </section>
+<!-- experience section ends -->
+
+
+
+<!-- Footer Section Starts -->
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>Devangshu Mazumder's Portfolio</h3>
+            <p>Thank you for visiting my personal portfolio website. Connect with me over socials or send me an email. Let's collaborate!</p>
+        </div>
+
+        <div class="box">
+            <h3>Quick Links</h3>
+            <a href="#home"><i class="fas fa-chevron-circle-right"></i> Home</a>
+            <a href="#about"><i class="fas fa-chevron-circle-right"></i> About</a>
+            <a href="#skills"><i class="fas fa-chevron-circle-right"></i> Skills</a>
+            <a href="#education"><i class="fas fa-chevron-circle-right"></i> Education</a>
+            <a href="#work"><i class="fas fa-chevron-circle-right"></i> Projects</a>
+            <a href="#experience"><i class="fas fa-chevron-circle-right"></i> Experience</a>
+            <a href="#contact"><i class="fas fa-chevron-circle-right"></i> Contact</a>
+        </div>
+
+        <div class="box">
+            <h3>Contact Info</h3>
+            <p><i class="fas fa-phone"></i> +44 7771 095038</p>
+            <p><i class="fas fa-envelope"></i> devangshuwork@gmail.com</p>
+            <p><i class="fas fa-map-marked-alt"></i> Birmingham, UK</p>
+        </div>
+    </div>
+
+</section>
+<!-- Footer Section Ends -->
+
+<!-- scroll top btn -->
+<a href="#home" aria-label="ScrollTop" class="fas fa-angle-up" id="scroll-top"></a>
+<!-- scroll back to top -->
+
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS STARTS ==== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+
+<!-- jquery cdn -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- typed.js cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js" integrity="sha512-1KbKusm/hAtkX5FScVR5G36wodIMnVd/aP04af06iyQTkD17szAMGNmxfNH+tEuFp3Og/P5G32L1qEC47CZbUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- particle.js links -->
+<script src="./assets/js/particles.min.js"></script>
+<script src="./assets/js/app.js"></script>
+
+<!-- vanilla tilt.js links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js" integrity="sha512-SttpKhJqONuBVxbRcuH0wezjuX+BoFoli0yPsnrAADcHsQMW8rkR84ItFHGIkPvhnlRnE2FaifDOUw+EltbuHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- scroll reveal anim -->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"
+    ></script>
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
+
+<script src="./assets/js/script.js"></script>
+
+</body>
+</html>

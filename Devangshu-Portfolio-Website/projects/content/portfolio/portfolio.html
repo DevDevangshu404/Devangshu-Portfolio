@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WORK IN PROGRESS | Devangshu Mazumder</title>
+    
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/projects/content/VideoFuzz/style.css">
+
+    <!-- Favicon -->
+    <link id="favicon" rel="shortcut icon" href="/assets/images/profile6.png" type="image/x-png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar Section -->
+    <header>
+        <a href="/" class="logo"><i class="fas fa-shield-alt"></i> Devangshu</a>
+        <div id="menu" class="fas fa-bars"></div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+     <!-- Project Section -->
+     <section class="project-description">
+        <canvas id="matrixCanvas"></canvas>
+        <h1 class="animate-title">MY PORTFOLIO WEBSITE</h1>
+        
+        <h4 class="animate-title">Always Updating </h4>
+
+        <br>
+        <div class="project-details">
+        <p class="animate-desc">I have developed a personal portfolio website that highlights my skills, projects, and experiences in the field of cybersecurity.The website was built using a combination of web development tools and technologies, including HTML and CSS for structure and design, as well as JavaScript for interactivity and animations, such as the matrix-style background effect.</p>
+        <p class="animate-desc">It also showcases various cybersecurity tools and techniques used in my projects. </p>
+        <p class="animate-desc">One of the highlighted projects focuses on fuzzing Electronic Control Units (ECUs) in vehicles using video detection and CAN Bus communication. This project demonstrates my ability to combine real-time monitoring with cybersecurity practices to identify vulnerabilities in critical automotive systems.</p>
+
+    
+        <!-- Figure 1: Instrument Cluster -->
+        <div class="media animate-media">
+            <img src="/assets/images/projects/website.png" alt="website making" class="project-image">
+            <p2 class="animate-desc">Figure 1: This page in making</p>
+        </div>
+
+        <p class="animate-desc">The development of this portfolio website allowed me to showcase not only my web development abilities but also my application of cybersecurity tools and methodologies. </p>
+        <p class="animate-desc">My knowledge of secure coding, penetration testing, reverse engineering, and vulnerability analysis is demonstrated through detailed project descriptions and technical breakdowns.  </p>
+        <p class="animate-desc">This project reflects my problem-solving skills and my ability to apply technical solutions to real-world cybersecurity challenges, making this portfolio a strong demonstration of my readiness to contribute to the cybersecurity field. </p>
+
+
+        
+    </div>
+
+    
+      <!-- Tools & Technologies Used -->
+      <h3 class="animate-title">Tools & Technologies</h3>
+      <ul class="animate-desc">
+          <li>HTML</li>
+          <li>css</li>
+          <li>JAVASCRIPT</li>
+          <li>Web Development</li>
+          <li>Cyber Security</li>
+      </ul>
+
+   <!-- GitHub Button Section -->
+   <div class="cta animate-cta">
+    <a href="https://github.com/DevDevangshu404/Devangshu-Portfolio" target="_blank" class="btn github-btn">View on GitHub</a>
+   <br>
+    <!-- Call to Action (e.g., View More Projects or Go Back to Projects Page) -->
+    <div class="cta animate-cta">
+        <a href="/projects" class="btn">Back to Projects</a>
+    </div>
+</section>
+
+     <!-- Matrix Effect Script -->
+     <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        let matrixChars = '01'; // The characters to display
+        const fontSize = 18;
+        let columns;
+        let drops;
+    
+        // Adjust canvas size to full width and height of the window
+        function adjustCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(0);
+        }
+    
+        // Draw the matrix effect
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Faint trail effect
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear the screen
+            ctx.fillStyle = '#7e3079'; // Matrix color
+            ctx.font = `${fontSize}px monospace`; // Matrix font
+    
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    
+                // Reset drop to the top randomly after falling off screen
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+    
+                drops[i]++;
+            }
+        }
+    
+        // Continuously redraw the matrix at 30 FPS
+        setInterval(drawMatrix, 33);
+    
+        // Adjust canvas size when the window is resized
+        window.addEventListener('resize', adjustCanvasSize);
+    
+        // Initial setup
+        adjustCanvasSize();
+    </script>
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <h3>Devangshu Mazumder</h3>
+            <p>Thank you for visiting my portfolio. Let's connect on social media or via email to collaborate on interesting projects.</p>
+            <div class="socials">
+                <a href="https://linkedin.com/in/devangshumazumder" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/DevDevangshu404" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:devangshuwork@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+<!-- scroll top btn -->
+<a href="#work" class="fas fa-angle-up" id="scroll-top"></a>
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS STARTS ==== -->
+<!-- jquery cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- vanilla tilt.js links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+<!-- scroll reveal anim -->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!-- isotope filter plugin cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+
+<!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
+
+<!-- Custom JS -->
+<script src="./script.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+
+</body>
+</html>
