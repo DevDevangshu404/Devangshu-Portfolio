@@ -187,6 +187,16 @@
     margin-right: 5%;  /* Adjust margin */
   }
 
+@media only screen and (max-width: 768px) {
+  .project-details p {
+      font-size: 1.5rem; /* Further reduce the font size for mobile */
+      text-align: center; /* Align text to the left for better readability */
+      margin-left: 10px;   /* Reduce margins */
+      margin-right: 10px;  /* Reduce margins */
+      line-height: 1.4; /* Slightly reduce line height for mobile */
+  }
+}
+
   .project-details p2 {
     display: block;
     margin-top: 1rem; /* Adjust this value for proper spacing */
