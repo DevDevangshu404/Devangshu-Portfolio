@@ -1,6 +1,6 @@
 [
     {
-        "name": "A New Frontier in Fuzzing: Real-Time Video Detection for CAN Bus Networks",
+        "name": "Advanced CAN Bus Fuzzing Framework: Integrating Real-Time Visual and Log-Based Detection for Enhanced Automotive Security",
         "category": "cybersecurity",
         "desc": "This project pioneers real-time video detection in CAN bus fuzzing, revealing automotive vulnerabilities missed by traditional methods.It is applicable beyond automotive, it paves the way for enhanced cybersecurity in cyber-physical systems.",
         "image": "fuzzing",
